@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Retangular ↔ Polar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input[type="number"], input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Calculadora Retangular ↔ Polar</h1>
+
+    <div>
+        <h2>Retangular para Polar</h2>
+        <input type="number" id="real" placeholder="Parte Real (a)">
+        <input type="number" id="imaginary" placeholder="Parte Imaginária (b)">
+        <button onclick="convertToPolar()">Converter para Polar</button>
+        <div id="polarResult" class="result"></div>
+    </div>
+
+    <hr>
+
+    <div>
+        <h2>Polar para Retangular</h2>
+        <input type="number" id="magnitude" placeholder="Magnitude (r)">
+        <input type="number" id="angle" placeholder="Ângulo (θ em graus)">
+        <button onclick="convertToRectangular()">Converter para Retangular</button>
+        <div id="rectangularResult" class="result"></div>
+    </div>
+</div>
+
+<script>
+    function convertToPolar() {
+        const real = parseFloat(document.getElementById('real').value);
+        const imaginary = parseFloat(document.getElementById('imaginary').value);
+        
+        if (isNaN(real) || isNaN(imaginary)) {
+            document.getElementById('polarResult').textContent = 'Por favor, insira valores válidos.';
+            return;
+        }
+
+        const magnitude = Math.sqrt(real * real + imaginary * imaginary);
+        const angle = Math.atan2(imaginary, real) * (180 / Math.PI);
+
+        document.getElementById('polarResult').textContent = `Magnitude: ${magnitude.toFixed(2)}, Ângulo: ${angle.toFixed(2)}°`;
+    }
+
+    function convertToRectangular() {
+        const magnitude = parseFloat(document.getElementById('magnitude').value);
+        const angle = parseFloat(document.getElementById('angle').value);
+
+        if (isNaN(magnitude) || isNaN(angle)) {
+            document.getElementById('rectangularResult').textContent = 'Por favor, insira valores válidos.';
+            return;
+        }
+
+        const angleInRadians = angle * (Math.PI / 180);
+        const real = magnitude * Math.cos(angleInRadians);
+        const imaginary = magnitude * Math.sin(angleInRadians);
+
+        document.getElementById('rectangularResult').textContent = `Parte Real: ${real.toFixed(2)}, Parte Imaginária: ${imaginary.toFixed(2)}`;
+    }
+</script>
+
+</body>
+</html>
